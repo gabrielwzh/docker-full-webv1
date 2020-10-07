@@ -1,0 +1,33 @@
+version: "3"
+services:
+  frontend:
+    container_name: clientwebC
+    image: clientweb
+    build:
+        context: ./client
+        dockerfile: Dockerfile
+    ports: 
+      - "3000:3000"
+    volumes:
+      - ./client:/usr/src/app
+      - /usr/src/app/node_modules
+    networks:
+      - docker-full-webv1
+    stdin_open: true
+  backend:
+    container_name: serverwebC
+    image: serverweb
+    build:
+        context: ./server
+        dockerfile: Dockerfile
+    ports:
+      - "5000:5000"
+    volumes:
+      - ./server:/usr/src/app
+      - /usr/src/app/node_modules
+    networks:
+      - docker-full-webv1
+networks:
+  docker-full-webv1:
+    driver: bridge
+
